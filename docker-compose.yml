@@ -1,0 +1,44 @@
+react:
+    build: .
+    ports:
+        - 9002
+        - 3000
+    command: start  
+    environment:
+        VIRTUAL_HOST: reactloki.test
+        VIRTUAL_PORT: 3000
+    volumes:
+        - .:/project
+    links:
+        - redis
+    
+redis:
+    image: redis:3.2.8-alpine
+
+storybook:
+    build: ./docker/storybook
+    ports:
+        - 9001
+        - 9009
+    environment:
+        VIRTUAL_HOST: styleguidereactloki.test
+        VIRTUAL_PORT: 9009
+    command: storybook
+    volumes:    
+        - .:/project
+
+# loki:
+#     build: ./docker/front
+#     command: test -- --host storybook/  
+#     links: 
+#         - storybook:storybook.test 
+         
+#     environment:
+#         VIRTUAL_HOST: styleguide.reacloki.test
+#         VIRTUAL_PORT: 9009
+#     entrypoint: yarn loki
+#     volumes:
+#         - .:/project
+#         - ~/.yarn-cache:/root/.yarn-cache
+#         - ~/.yarn/cache:/root/yarn/cache
+#         - /var/run/docker.sock:/var/run/docker.sock:ro
