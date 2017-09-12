@@ -4,3 +4,5 @@ npm install
 getstorybook -f
 docker-compose build storybook
 docker-compose up storybook
+npm install recompose --save
+npm install rxjs --save
